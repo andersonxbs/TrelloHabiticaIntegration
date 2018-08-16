@@ -110,4 +110,11 @@ venv.bak/
 *.wpr
 
 # specific files
+.vs
+.vscode
+
+# docker stuff
+docker-compose.yml
+docker-compose.*.yml
+docker-volume/
 

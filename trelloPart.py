@@ -1,6 +1,7 @@
 import requests
 import json
 import pytz
+import os
 
 from datetime import datetime
 import datetime
@@ -8,7 +9,6 @@ import dateutil.parser
 import datetime as dt
 from pytz import timezone
 from datetime import timedelta  
-
 
 def get_response_as_jsonList(idOfList, apiKey, apiToken):
     '''get the string which represents a list of json objects.
@@ -22,6 +22,7 @@ def get_response_as_jsonList(idOfList, apiKey, apiToken):
     # send the request
     response = requests.request("GET", url, params=querystring)
     textResponse = response.text[1:-1]
+
     # process the string that we get. convert it into a list of json objects
     counter = 0;
     listOfJson=[]
@@ -47,7 +48,19 @@ def get_response_as_jsonList(idOfList, apiKey, apiToken):
                 if textResponse[i+1]==",":
                     i+=1;   
         i+=1       
-    return listOfJson    
+    return listOfJson
+
+def get_card_as_json(idOfCard, apiKey, apiToken):
+    '''get the string which represents details of a card as json objects.'''
+    
+    url = "https://api.trello.com/1/cards/" + idOfCard
+    # put the id of the list in the url
+    querystring = {"key": apiKey, "token": apiToken}
+    
+    # send the request
+    response = requests.request("GET", url, params=querystring)
+
+    return json.loads(response.text)
 
 def get_done_cards_json(jsonList, idOfList):
     '''Return the json objects which contain the cards which were finished since the last time software was ran.'''
@@ -71,6 +84,7 @@ def get_done_cards_json(jsonList, idOfList):
     # iterate through every action, and check if a card has been moved to this list.
     # if it has, check the date for it. If it is the right date, add it to the list.
     # Date is in ISO 8601 format
+    print("Filtering cards since " + str(last_date))
     for jsonElement in jsonList:
         dataDictionary = jsonElement.get("data")
         # check if it has a key with listAfter. If it does, that means the card has changed lists.
@@ -79,7 +93,6 @@ def get_done_cards_json(jsonList, idOfList):
             idOfCurrentList = checkIfItemMove.get("id")
             # check if it's been moved here rather than from here, i.e if it has the same id as this list
             if idOfCurrentList==idOfList:
-                nameOfCardMoved = dataDictionary.get("card").get("name")
                 # get the date the card was moved
                 dateOfCardMoved = jsonElement.get("date")
                 # convert to date object                
@@ -87,8 +100,8 @@ def get_done_cards_json(jsonList, idOfList):
                 # if the card was finished since the last date, then add the card to the list.
                 if dateCardFinished > last_date:
                     validJsonElements.append(jsonElement)
-    return validJsonElements
 
+    return validJsonElements
 
 def find_difficulty_level(cardName):
     # difficulty level will be between brackets.
@@ -115,13 +128,11 @@ def find_difficulty_level(cardName):
     else: # consider the task easy, which is 1
         as_number=1
     return str(as_number)
-
-
-            
+          
 def last_time_run():
     '''Reads a file which stores the dates the integration took place.
     If integration has never taken place before, sends an empty string.'''
-    file_name = '_date_run_last.txt'
+    file_name = 'data/_date_run_last.txt'
     try: # in case it doesn't exist
         with open(file_name, "r") as f:
             all_lines = f.readlines()
@@ -133,5 +144,9 @@ def last_time_run():
                 last_date = ""
             f.close()
     except IOError:
-        last_date = ""
+        if "START_DATE" in os.environ:
+            last_date = os.environ['START_DATE']
+        else:
+            last_date = ""
+
     return last_date

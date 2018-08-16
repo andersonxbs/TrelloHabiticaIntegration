@@ -10,7 +10,7 @@ def create_and_score_task(user_key, api_token, cardJson, priority):
     
     # Create the task
     data = {
-        "text": cardJson.get("data").get("card").get("name"),
+        "text": cardJson.get("name"),
         "type": "todo",
         "priority":priority,
         "alias": cardJson.get("id")
@@ -22,8 +22,8 @@ def create_and_score_task(user_key, api_token, cardJson, priority):
     
     response = requests.request("POST", url, headers=querystring, data = data)
     # get the status code to create the task
-    status_code1 = response.status_code
-    reason1 = response.reason
+    create_task_status_code = response.status_code
+    create_task_reason = response.reason
     
     
     url = "https://habitica.com/api/v3/tasks/" + cardJson.get("id") + "/score/up"
@@ -33,18 +33,18 @@ def create_and_score_task(user_key, api_token, cardJson, priority):
     response = requests.request("POST", url, headers=querystring)
     
     # get the status code to score the task
-    status_code2 = response.status_code
-    reason2 = response.reason
+    score_task_status_code = response.status_code
+    score_task_reason = response.reason
     
-    file_name = 'requests_to_habitica.txt'
+    file_name = 'data/requests_to_habitica.txt'
     f = open(file_name, 'a+')  # open file in append mode
     fmt = '%Y-%m-%dT%H-%M-%S'
     # get time now in UTC time
     now = datetime.datetime.utcnow()
     date_now=now.strftime(fmt)    
-    new_string = "Create Task: " + str(status_code1) + ", " + reason1 + ", Score Task: " + str(status_code2) + ", " + reason2 +  ", " + "date_today: " + date_now + ",  " + "card_name: "+  data.get("text") + "\n"
+    new_string = "Create Task: " + str(create_task_status_code) + ", " + create_task_reason + ", Score Task: " + str(score_task_status_code) + ", " + score_task_reason +  ", " + "date_today: " + date_now + ",  " + "card_name: "+  data.get("text") + "\n"
     f.write(new_string)
     f.close()    
     
-    return (status_code1, status_code2)
+    return (create_task_status_code, score_task_status_code)
 
