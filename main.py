@@ -32,7 +32,12 @@ def send_from_trello_to_habitica():
     cardJson = tp.get_card_as_json(jsonElement.get("data").get("card").get("id"), ud.trello_apiKey, ud.trello_apiToken) 
     priority = tp.find_difficulty_level(cardJson.get("name"))
 
+    # try get assigned members of card
     idOfMembers = cardJson.get("idMembers")
+    if (len(idOfMembers) == 0)
+      # consider the member creator of the card for receiveing the scores if there is no one assigned
+      idOfMembers.append(jsonElement.get("idMemberCreator"))
+
     for idMember in idOfMembers:   
       if idMember in ud.habitica_users_by_trello_member_id:
         f = open('data/test.json', 'a+')  # open file to read

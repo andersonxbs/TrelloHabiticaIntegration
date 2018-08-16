@@ -30,4 +30,4 @@ or by writing the difficulty level in brackets in the card name. i.e (hard), (ea
 Otherwise, task is created as easy by default. Example: "Send email to Johnathan **"
 
 # Links
-[Docker Repositoy](https://hub.docker.com/r/andersonxbs/trello-s2-habitica/)
+[Docker Repositoy](https://hub.docker.com/r/andersonxbs/trello-habitica-integration/)
