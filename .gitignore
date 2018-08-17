@@ -103,9 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# all text files
-*.txt
-
 # all wing work projects
 *.wpr
 
