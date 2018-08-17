@@ -26,7 +26,7 @@ You can select a date, and write it in this format in the file _date_run_last.tx
 Format: '%Y-%m-%dT%H-%M-%S'. Example: 2018-07-21T21-33-45, no spaces.
 
 3. You can select difficulty level of a task either by putting in 1 to 4 stars in increasing order for increasing difficulty
-or by writing the difficulty level in brackets in the card name. i.e (hard), (easy), (medium), (trivial).
+or by writing the difficulty level in brackets in the card name. i.e [trivial], [easy], [medium], [hard].
 Otherwise, task is created as easy by default. Example: "Send email to Johnathan **"
 
 # Usage (docker)

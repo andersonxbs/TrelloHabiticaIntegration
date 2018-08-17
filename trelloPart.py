@@ -105,8 +105,8 @@ def get_done_cards_json(jsonList, idOfList):
 
 def find_difficulty_level(cardName):
     # difficulty level will be between brackets.
-    indexOpenBracket = cardName.find("(")
-    indexClosedBracket = cardName.find(")")
+    indexOpenBracket = cardName.find("[")
+    indexClosedBracket = cardName.find("]")
     if(indexOpenBracket!=-1 and indexClosedBracket!=-1):
         # if they're in the right order
         if(indexOpenBracket<indexClosedBracket):
