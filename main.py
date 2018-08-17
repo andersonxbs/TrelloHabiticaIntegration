@@ -34,7 +34,7 @@ def send_from_trello_to_habitica():
 
     # try get assigned members of card
     idOfMembers = cardJson.get("idMembers")
-    if (len(idOfMembers) == 0)
+    if (len(idOfMembers) == 0):
       # consider the member creator of the card for receiveing the scores if there is no one assigned
       idOfMembers.append(jsonElement.get("idMemberCreator"))
 
