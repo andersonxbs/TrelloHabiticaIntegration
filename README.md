@@ -79,7 +79,7 @@ version: '3'
 services:
   trello-s2-habitica:
     container_name: trello-s2-habitica
-    image: andersonxbs/trello-s2-habitica
+    image: andersonxbs/trello-habitica-integration
     volumes:
      - "./docker-volume:/usr/src/app/data"
     environment:        
