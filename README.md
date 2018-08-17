@@ -7,12 +7,12 @@ all of your "done" tasks, and get its id. Program will take the cards from the "
     * Expected format for habitica_users_by_trello_member_id:
     ```
     {
-        "35345jjkjkhjkhkk345k4j5h": { // mamberId from trello
+        "35345jjkjkhjkhkk345k4j5h": { // memberId from trello
             "name": "captainawesome",
             "habitica_user_key": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656",
             "habitica_api_token": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656"
         },
-        "35345jjkjkhjkhkk345k4j5g": { // mamberId from trello
+        "35345jjkjkhjkhkk345k4j5g": { // memberId from trello
             "name": "almostasawesomeasthecaptain",
             "habitica_user_key": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656",
             "habitica_api_token": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656"
