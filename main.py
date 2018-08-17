@@ -40,9 +40,6 @@ def send_from_trello_to_habitica():
 
     for idMember in idOfMembers:   
       if idMember in ud.habitica_users_by_trello_member_id:
-        f = open('data/test.json', 'a+')  # open file to read
-        f.write(str(ud.habitica_users_by_trello_member_id))
-        f.close()
         habiticaUser = ud.habitica_users_by_trello_member_id[idMember]
         (create_task_status_code, score_task_status_code) = hp.create_and_score_task(habiticaUser["habitica_user_key"], habiticaUser["habitica_api_token"], cardJson, priority)
         print("New task sent to habitica for user " + habiticaUser["name"] + " with create_tast_status_code " + str(create_task_status_code) + " and score_task_status_code " + str(score_task_status_code))
