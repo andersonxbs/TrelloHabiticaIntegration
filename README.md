@@ -29,5 +29,77 @@ Format: '%Y-%m-%dT%H-%M-%S'. Example: 2018-07-21T21-33-45, no spaces.
 or by writing the difficulty level in brackets in the card name. i.e (hard), (easy), (medium), (trivial).
 Otherwise, task is created as easy by default. Example: "Send email to Johnathan **"
 
-# Links
+# Usage (docker)
 [Docker Repositoy](https://hub.docker.com/r/andersonxbs/trello-habitica-integration/)
+
+## Environment Variables
+
+###### PROCESS_INTERVAL_IN_SECONDS (Optional)
+Interval in seconds for checking for new done tasks on trello. Default is 3600 seconds (1 hour)
+
+###### START_DATE (Optional)
+Datetime to start looking for tasks on done list. 
+Format: '%Y-%m-%dT%H-%M-%S'. Example: 2018-07-21T21-33-45, no spaces.
+If not set, it will look for tasks since the list was first created.
+
+###### TRELLO_DONE_LIST_ID
+Id of your list of done tasks on trello.
+
+###### TRELLO_API_KEY
+Your trello API keys.
+
+###### TRELLO_API_TOKEN
+Your trello API token.
+
+###### HABITICA_USERS_BY_TRELLO_MEMBER_ID 
+It must have API keys and API tokens of the users on Habitica acording to the member id of trello.
+Example:
+~~~json
+{
+   "35345jjkjkhjkhkk345k4j5h": { // mamberId from trello
+      "name": "captainawesome",
+      "habitica_user_key": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656",
+      "habitica_api_token": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656"
+   },
+   "35345jjkjkhjkhkk345k4j5g": { // mamberId from trello
+      "name": "almostasawesomeasthecaptain",
+      "habitica_user_key": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656",
+      "habitica_api_token": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656"
+   }
+}
+
+~~~
+
+## Docker Compose
+Example with fake values: 
+
+```docker-compose
+version: '3'
+
+services:
+  trello-s2-habitica:
+    container_name: trello-s2-habitica
+    image: andersonxbs/trello-s2-habitica
+    volumes:
+     - "./docker-volume:/usr/src/app/data"
+    environment:        
+      PROCESS_INTERVAL_IN_SECONDS: 60
+      START_DATE: '2018-08-16T08-00-00'   
+      TRELLO_DONE_LIST_ID: 'sakjdfkjs8d7f8a7sd8f7asdjfh8'
+      TRELLO_API_KEY: 'kjskljdf8asd8f098s9d8f98asdfisjdf0s8df'
+      TRELLO_API_TOKEN: 'ajsdkfjkljasdf9078a908s7dfjahsdf90a7sdjfha908sdfjkahsdf987jhsd9'
+      HABITICA_USERS_BY_TRELLO_MEMBER_ID: > 
+        {
+          "35345jjkjkhjkhkk345k4j5h": {
+            "name": "captainawesome",
+            "habitica_user_key": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656",
+            "habitica_api_token": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656"
+          },
+          "35345jjkjkhjkhkk345k4j5g": {
+            "name": "almostasawesomeasthecaptain",
+            "habitica_user_key": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656",
+            "habitica_api_token": "34j5hkjh-3456-kkj5-4567-jkj4fgdf5656"
+          }
+        }
+
+```
